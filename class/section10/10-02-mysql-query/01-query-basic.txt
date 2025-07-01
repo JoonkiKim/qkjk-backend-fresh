@@ -1,0 +1,112 @@
+SQL 쿼리문을 알아보자
+
+한번 리마인드 한다는 생각으로 구조 파악해보자
+
+MYsql에서 상단에 sql 누르면 스크립트 입력기가 나옴. 거기에 입력하면 됨
+
+쉘에 입력하는거랑 비슷하다고 보면됨
+
+세미 콜론 반드시 넣어주기!!!
+
+show databases;
+
+use myproject;
+
+show tables;
+
+desc product;
+
+-- 조회
+select * from product p ;
+
+-- 삽입
+-- mysql에서는 큰따옴표, 작은따옴표는 큰 차이가 없으나, 다른 SQL DB는 대부분 작은 따옴표를 사용한다
+insert into product (id, name, description, price) 
+values(uuid(), '마우스', '좋은 마우스', 15000);
+-- product테이블의 id, name, description, price 컬럼에 각각 uuid(), '마우스', '좋은 마우스', 15000 값을 넣어줘
+-- * MYsql에 uuid라는 내장함수가 있다!
+
+insert into product (id, name, description, price) 
+values(uuid(), '노트북', '최신 맥북', 20000);
+
+insert into product (id, name, description, price) 
+values(uuid(), '셔츠', '깔끔한 셔츠입니다', 15000);
+
+
+-- 삭제
+-- product테이블에서 '셔츠'라는 이름을 가진 데이터를 없애줘
+-- 삭제는 항상 조건을 넣어줘야된다!
+delete from product
+ where name = '셔츠'
+;
+
+-- 수정
+-- 이것도 조건을 항상 줘야된다
+update product
+	set price = 18000
+ where name = '마우스';
+
+
+-- ====== 조인 ======
+
+-- product테이블과 product_saleslocation테이블을 조인해보자
+-- id컬럼을 통해서 조인해줄거다
+
+-- 일단 거래장소에 데이터 입력하기
+insert into product_saleslocation(id, address, addressDetail, lat, lng, meetingTime)
+values(uuid(), '구로구', '구로디지털단지역', 37.281723, 127.192387, '2023-01-10')
+;
+
+select * from product_saleslocation ps ;
+
+-- product테이블에 product_saleslocation의 id값을 넣어서 업데이트 해준다
+update product p  
+	set productSaleslocationId = 'f5bdbe09-f198-11ef-8bd6-00155d840136'
+ where name = '마우스'
+;
+
+-- 이제 진짜 조인해서 조회해보자 : id컬럼을 조인 기준으로
+-- id는 두개니까 product.id로 더 명확하게 선언해주기
+-- 컬럼에 별칭 설정가능
+select product.id, name, price, address, addressDetail as '상세주소'
+	from product p, product_saleslocation ps 
+-- 	테이블 이름 축약도 가능
+ where p.productSaleslocationId = ps.id  
+;
+
+
+
+-- ======== 추가 기능들 =========
+-- AND, OR 조건
+
+
+# 추가 기능 1 (and)
+update product
+	set isSoldout = true
+where name = '노트북'
+	and price= 20000
+;
+
+# 추가 기능 2 (or)
+update product
+	set isSoldout = true
+ where name = '노트북'
+	or price= 20000
+;
+
+
+
+# 추가 기능 3
+# 주석 쉽게 다는 방법 : 1=1 을 넣어줘서 무조건 참이 되는 조건을 하나 넣어줘서 아래로 내려가도록해서 조건들에 쉽게 주석을 달 수 있도록
+# update와 delete에서는 가급적 사용하지 않는 것이 좋음: 실수로 밑에 조건을 다 없애면 싹다 변경이 되니까 조심!
+select *
+	from product
+ where 1 = 1
+	-- and name = '마우스'
+	and price = 5000
+	and isSoldout = false
+;
+
+
+
+

@@ -1,0 +1,23 @@
+지금까지 배운 내용을 도커에 담아보자
+
+dockerignore, env, docker-compose.yaml, Dockerfile
+이 네개의 파일을 가져온다
+
+dockerignore에 node_modules들어있는지 확인
+docker-compose.yaml에서 관련 사항 적용
+
+env파일에는 app.modules의 forRoot함수 안에 있던 내용을 담아줄거임
+-> 이떄 로컬용 env(그냥 env)와 도커용 env(이건 env.docker)를 따로 만들어줄거임
+왜내면 도커용 env는 host는 네임리졸루션에 따라 my-database이고 password, database는 yaml파일에서 정의해준대로 써야되기 때문
+=> env를 만들고 
+로컬용은 app.modules에 적용해주고, 
+도커용은 yaml파일로 가서 env_file에 적용해준다
+
+
+도커 연결 후 실행하고 싶으면 docker-compose build 후 docker-compose up해주면 된다
+이때 기존에 mysql실행한거랑, dbeaver도 꺼야된다
+sudo systemctl stop mysql 로 꺼주자, 디비버는 그냥 창을 닫으면 된다
+
+docker-compose up 후에 디비버 접속할때 데이터베이스 이름은 mysql 비밀번호는 env.docker에 써있는 내용(root)대로 써줘야된다
+
+

@@ -1,0 +1,31 @@
+open with live server를 할땐 어떤 파일을 켰는지 확인해라
+
+퀴즈 6의 코드를 수정해놓고 퀴즈5 화면을 켜놓은 다음에 왜 안되지 하고 고민하고 있었음
+
+<데이터 통신>
+1. 프런트에서 백엔드로 데이터를 넘겨줄땐
+특정 주소를 넣고 axios로 넘겨준다
+const result = await axios.post("http://localhost:3000/usersemail", {
+      name,
+      idnumber,
+      preference,
+      email,
+      password,
+      phonenumber: fullPhoneNumber,
+    });
+
+2. 백엔드가 그 데이터를 받고 어떤 액션을 취하려면(예를 들어 등록), 특정 주소를 엔드포인트로 설정해놓고 req로 데이터를 받으면 된다. 여기서 중요한건 프런트에서 데이터를 받는 경로는 req라는 것!!!
+
+app.post("/usersemail", function (req, res) {
+  // 프런트에서 넘겨준 데이터는 무조건 req에 있는거다!!!
+  const { name, phonenumber, preference, email } = req.body;
+
+  const isValid = checkEmail(email);
+  if (isValid === false) return;
+
+  const welcome = welcomeTemplate({ name, phonenumber, preference });
+
+  sendWelcomeToEmail(email, welcome);
+
+  res.send("가입완료!");
+});

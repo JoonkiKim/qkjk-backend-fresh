@@ -1,0 +1,8 @@
+npx라는 명령어를 사용하면, 한번만 다운 받고 그걸 활용한 다음에 그걸 삭제할 수 있다
+
+예를 들어
+1. yarn add @nestjs/cli 를 설치한다음에
+2. @nestjs/cli new qqq 이렇게 해서 nestjs를 설치하고
+3. 다시 @nestjs/cli는 삭제해야하는 경우
+123번을 반복하는게 아니라 npx를 사용하면 된다
+=> npx @nestjs/cli new qqq

@@ -1,0 +1,35 @@
+npx라는 명령어를 사용하면, 한번만 다운 받고 그걸 활용한 다음에 그걸 삭제할 수 있다
+
+예를 들어
+1. yarn add @nestjs/cli 를 설치한다음에
+2. @nestjs/cli new qqq 이렇게 해서 nestjs를 설치하고
+3. 다시 @nestjs/cli는 삭제해야하는 경우
+123번을 반복하는게 아니라 npx를 사용하면 된다
+=> npx @nestjs/cli new qqq
+
+
+이제 앞으로 08-01-nestjs를 복붙하면서 수업할건데 .git이 계속 같이 복붙되면 나중에 깃허브 업로드할때 git이 여러개라서 꼬임. 그래서 맨 바깥에만 .git을 만들어주고, 폴더 내부의 git은 없애준다 
+(rm -rf .git)
+
+
+package.json으로 가서 script 부분을 보자
+start:dev에 있는 "nest start --watch" 명령어에서 --watch부분이 노드몬 역할을 해줌. 소스코드 수정되면 새로고침해주는거임
+start:prod는 배포할때 쓰는건데, 그 전까지는 start:dev를 쓴다
+
+start:dev하면 dist폴더가 생성되는데, 최적화된 폴더이다
+근데! build를 해도 dist가 생성되는데, 얘가 훨씬 최적화가 더 잘된 폴더이다. 이게 찐이다
+
+그럼 dist는 왜나오는거냐
+nestjs에서는 코딩은 타입스크립트로 하지만 그게 자바스크립트로 변경되어서 dist들어간 뒤에 dist폴더가 실행된다
+
+
+///////////
+dependencies는 '실행'을 할때 필요한것들
+
+devDependencies는 dev가 붙어있으니까 '개발'할때 vscode에서 필요한 것들, 예를 들어 타입스크립트는 실행할때는 필요없고 개발할때만 필요함, 그러니까 타입스크립트는 devDependencies 안에 들어가있음
+
+근데 dependencies안에 싹 넣어도 개발 및 실행이 잘됨
+그럼 왜 구분하냐?
+나중에 배포할때는 개발시 필요한 내용들을 설치할필요가 없으니까, 빼주는거임
+yarn install --production을 하면 devDependencies는 설치가 안되고 배포용 노드모듈스만 설치됨
+=> 이렇게 구분해줌으로써 설치시간을 단축시켜줄 수 있다

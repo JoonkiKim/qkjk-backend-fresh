@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  my-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # 내 컴퓨터의 index.js와 도커 컴퓨터 안의 myfolder안에 있는 index.js를 연결해준다
+      - ./index.js:/myfolder/index.js
+      - ./controllers:/myfolder/controllers
+
+    ports:
+      - 3000:3000
+  my-database:
+    image: mongo:5
+    ports:
+      - 27017:27017
+
+    # volume연결 후에 처음에 한번만 docker-compose build를 해주고, up을 해주면, 그 다음부터는 수정하면 자동으로 내 컴퓨터와 도커 컴퓨터 모두에서 코드 업데이트가 된다(노드몬이 코드 수정을 감지해서 서버 리스타팅이 된다)

@@ -1,0 +1,21 @@
+# ODM 중 하나인 mongoose를 몽고디비에 연결해보자
+
+version: "3.7"
+
+services:
+  my-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - 4000:4000
+  my-database:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.mongo
+
+    # 도커 파일에 딱 하나의 코드만 써있다면(FROM mongo:5), 도커파일 없이 아래처럼 그냥 한줄로 써주기만 해도 된다
+    image: mongo:5
+    # ports:
+    #   - 27017:27017 -> 네임레졸루션으로 연결할때는 포트가 없어도 되지만, 이렇게 되면 몽고DB컴패스에서 my-database라는 이름의 도커에 연결이 안됨. 왜냐면 컴패스는 포트로 연결을 하는거니까 .하지만 네임레졸루션으로 express에서는 my-database라는 이름의 도커에 연결이 가능함!

@@ -1,0 +1,45 @@
+# 도커 파일을 여러개 쓰면 복잡해지니까 묶어주는 docker-compose를 써준다
+# 아래의 코드를 작성하고 docker-compose build를 하면 이미지가 저장됨
+# docker-compose up 하면 실행됨
+# docker-compose.yaml파일이 있는 곳에서 하면 됨
+# 종료할때는 그냥 ctrl c 하면 됨
+# 만약에 새로운 터미널에서 종료하고 싶으면 docker-compose stop
+# 개별 도커파일별로 빌드 및 실행을 할 필요가 없으니까 훨씬 간편함
+
+# 도커에서 몽고디비를 설치해놨기 때문에 내 로컬 컴퓨터에서는 몽고디비를 삭제해도 된다
+
+# 앞으로도 웬만하면 도커 컴퓨터에 프로그램을 설치할거임
+
+# 도커 컴퓨터에 접속해서 거기서 몽고 디비에 접속하기
+# docker exec -it 4e348e634a9e /bin/bash
+# mongosh 입력하면 끝
+
+# 나머지는 몽고db 명령어로 입력하면 됨
+
+# show collections해도 아까 만든 products컬렉션이 없는건, 그건 로컬 컴퓨터의 몽고디비에서 만들었기 때문
+
+# 해당 디비에서 나가려면 exit 하면 되고, 해당 디비에서도 나가려면 또 exit하면 됨
+
+version: "3.7"
+
+# 컴퓨터들을 services라고 부름
+# 띄어쓰기에 따라 부모자식이 결정되니까 주의해야됨
+services:
+  # my-backend, my-database는 컴퓨터 이름
+  my-backend:
+    build:
+      # context는 파일경로, dockerfile은 파일이름
+      # 경로에는 점 . 을 꼭 찍어줘야 한다
+      context: .
+      dockerfile: Dockerfile
+      # ports는 포트포워딩
+    ports:
+      - 4000:4000
+  my-database:
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo
+    ports:
+      - 27017:27017
+      # 포트번호 오타조심하기
+      # mongoDB-compass를 연결하면 지금 이 포트를 compass가 찾아서 연결해준다

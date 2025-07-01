@@ -1,0 +1,17 @@
+{
+  "name": "quiz4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon -L index.js"
+  },
+  "dependencies": {
+    "express": "4.18.1",
+    "nodemon": "^2.0.20",
+    "swagger-jsdoc": "6.2.7",
+    "swagger-ui-express": "4.6.0"
+  }
+}

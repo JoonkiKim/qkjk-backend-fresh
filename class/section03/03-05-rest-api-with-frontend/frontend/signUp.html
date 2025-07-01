@@ -1,0 +1,40 @@
+<!-- axios로 post요청을 날려보자. 참고로 axios는 REST API에서 사용하는거다! <> apollo-client는 graphQL! -->
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>회원가입 연습하기</title>
+
+    <!-- 이렇게 다운로드를 받으면 브라우저에서 window.axios로 실행된다 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      function zzz() {
+        // 1. 입력한 휴대폰 번호 가져오기
+        const myphone = document.getElementById("myphone").value;
+        console.log("나의 핸드폰번호: ", myphone);
+
+        // 2. 휴대폰 번호로 인증번호 api 요청하기(fetch, axios 등 사용)
+        window.axios
+          .post("http://localhost:3000/tokens/phone", {
+            qqq: myphone,
+          })
+          .then((res) => {
+            console.log(res.data);
+            document.getElementById("result").innerText = res.data;
+          });
+        // req.body에 변수를 담아서 보내줄건데, req.body.qqq로 받고 있으니까 qqq에 변수를 담아서 준다
+        // 응답 받는건 then으로 받아온다
+        // 인증상태 부분을 res.data로 덮어씌운다
+
+        // ** 근데 그냥 이렇게 요청하면 CORS에러가 뜬다
+        // 백엔드에서 CORS를 설치해줘야된다
+      }
+    </script>
+  </head>
+  <body>
+    휴대폰번호: <input id="myphone" type="text" />
+    <button onclick="zzz()">인증하기</button>
+    <div id="result">인증상태</div>
+    <button>회원가입하기</button>
+  </body>
+</html>

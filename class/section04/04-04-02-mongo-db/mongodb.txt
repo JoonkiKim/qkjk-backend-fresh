@@ -1,0 +1,39 @@
+<몽고디비 명령어>
+
+서비스 시작
+sudo systemctl start mongod
+
+상태확인 -> 초록색 불이 들어와야됨
+sudo systemctl status mongod
+
+서비스 재시작
+sudo systemctl restart mongod
+
+쉘 열기
+sudo mongosh
+
+사용자 생성
+db.createUser({user:'root', pwd:'1508', roles:['root']})
+
+생성했던 사용자로 접속하기 (비밀번호는 아까 만든 pwd넣으면 됨)
+sudo mongosh -u root -p
+
+현재 데이터 베이스 보기
+show databases;
+
+특정 db에 들어가기
+use local;
+use admin;
+등등
+
+해당 디비에서 컬렉션 종류 보기(서류봉투 종류보기)
+show collections;
+
+해당 컬렉션에서 특정 다큐먼트 조회하기 
+db.startup_log.find()
+-> 각 다큐먼트가 객체형태로 출력됨 => UI형태로 볼 수 있게 도와주는게 compass
+
+
+
+<주의>
+mongod compass는 데이터 베이스가 아니라 GUI툴이다. 보여주는 역할만 하는 것이다. compass에서 어떤 작업을 하면 몽고DB로 가서 작업이 이루어진다음에 compass는 보여주기만 하는거다

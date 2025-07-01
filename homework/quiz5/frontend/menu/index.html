@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <link rel="stylesheet" href="./index.css" />
+    <title>메뉴</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="Container">
+      <div id="Wrapper">
+        <div
+          id="Navi_Wrapper"
+          style="width: 100%; display: flex; justify-content: space-between"
+        >
+          <a href="../login/index.html" class="Back_Button"> 🔙로그인 </a>
+          <a href="../user/index.html" class="Back_Button"> 유저정보🔜 </a>
+        </div>
+
+        <div id="Title_Wrapper">나만의 메뉴</div>
+        <div onclick="openMenu()" id="Open_Menu_Btn">메뉴 열기</div>
+        <div class="CloseBtnWrapper">
+          <span id="CloseBtn" onclick="closeMenu()">X</span>
+        </div>
+        <div id="Menu_Background"></div>
+      </div>
+    </div>
+
+    <script src="index.js" type="module"></script>
+    <script src="menu.js" type="module"></script>
+  </body>
+</html>

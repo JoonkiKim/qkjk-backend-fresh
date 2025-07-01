@@ -1,0 +1,7 @@
+단순 html코드 사용시 함수를 전역으로 선언하려면 window.을 사용해야 한다
+ex. window.openMenu
+
+
+axios 요청은 아래와 같이 한다
+    const response = await axios.get("http://localhost:3000/users");
+    const userList = response.data;

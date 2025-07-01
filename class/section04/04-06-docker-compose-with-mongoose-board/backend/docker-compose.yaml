@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  my-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - 4000:4000
+  my-database:
+    image: mongo:5
+    ports:
+      - 27017:27017
+
+    # 자바스크립트 파일이 바뀌었을때는 docker-compose build를 다시 해줘야되지만, yaml파일은 빌드랑 상관없기 때문에 yaml파일 변경시에는 docker-compose up만 다시 해주면 된다

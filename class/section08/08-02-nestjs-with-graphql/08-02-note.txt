@@ -1,0 +1,37 @@
+nestjs랑 graphql을 연결해보자
+* graphql과 typescript를 개념적으로 약간 혼동하고 있는데, graphql은 데이터 통신 방법이고, typescript는 코딩방법이다
+
+처음에 API를 만들려고 하면 많이 막막한데, 그런건 독스에 나와있다. 이제는 진짜 챗지피티말고 독스에 익숙해지자
+
+nestjs.com에 들어가자
+폴더를 어떻게 만들지가 궁금한거니까 source code부분에 가자. 깃허브에 접속하게 될텐데, 거기서 sample부분에 가보자.
+그러면 각 폴더에 스웨거, 타입ORM, mvc형식 등등에 대해서 nestjs에서는 각각을 어떻게 만들면 되는지 나와있음
+
+우리가 하려는건 graphql-codeFirst이니까 그거에 들어가보자
+* graphql-codeFirst란 무엇인가
+graphql은 독스문서랑 API가 모두 있어야 '실행'된다. 이전에는 각각 만들어줬다면, nestjs에서는 API를 만들고 거기에 타입스크립트를 지정해주면 독스 문서가 자동으로 생성된다 => codefirst 라고 부른다
+반대로 둘다 작성해줘야 하는건 schema first라고 부른다
+
+각 API별로 일단 폴더를 만들어준다. 이때 폴더 이름 뒤에 s를 붙여준다. (셀수있는 명사에는s를 붙이고 셀수없는 명사에는 s를 안 붙인다)
+boards, users 등등을 만들어 주고 그 안에 각각 resolver(이게 컨트롤러 역할), modules, service를 만들어준다. 이 안에서는 리졸버, 서비스가 모듈로 합쳐지고, 각 모듈은 바깥에 있는 app.module에 합쳐진다. 그리고 그게 main.ts로 가서 실행된다
+
+
+리졸버를 쓰는건 그래프큐엘이다!
+MVC구조 자체는 nestjs에서 쓰는거긴한데 그중 controller를 resolver로 쓰는게 graphql이다!
+
+nestjs : modules > controller > service
+
+graphql : modules > resolver > service
+
+
+ 
+@데코레이터란 무엇인가? => 역할을 선언해주는 부분~!
+아래의 코드들이 어떤 역할을 할것인지에 대해서 기능을 부여 및 선언해주는 역할
+ex. @Controller를 하면 앞으로 이 파일은 컨트롤러야~ 라고 선언해주는거고, @Get(), @Post(), @Put(), @Delete()등의 데코레이터를 하면 이건 앞으로 http통신을 위한 코드야~ 라고 선언해주는거임
+
+
+--------
+2/6
+NEST 설치 시에는 08-02-nestjs-with-graphql 파일을 기준으로 공부하자
+
+항상 버전에 맞게 하고 resolution으로 버전을 고정해놓자
