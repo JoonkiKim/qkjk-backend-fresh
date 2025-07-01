@@ -3,7 +3,7 @@ src폴더를 한번 봅시다
 app.module은 index.tsx부분이고 의존성을 넣어주는 부분
 controller와 service는 저번에 공부한거랑 똑같음
 
-app.controller.spect.ts는 테스트코드
+app.controller.spec.ts는 테스트코드
 
 main.ts는 최종결과물들을 실행해주는 것들
 app컴포넌트를 불러와서 실행해주는 것이다

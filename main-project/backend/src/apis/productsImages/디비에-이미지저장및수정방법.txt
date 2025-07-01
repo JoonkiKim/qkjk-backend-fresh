@@ -1,0 +1,56 @@
+상품:이미지 = 1:N 관계임
+따라서 ManyToOne을 ProductImage테이블에 선언해줘야된다
+
+
+1. 엔티티 & 입력 DTO 정의
+- ProductImage 엔티티에 ManyToOne선언해주기
+  • 컬럼: id (PK), url, isMain
+  • 외래키: ManyToOne → Product => 이건 product테이블이 아니라 ProductImage테이블에 선언해주는거임!!
+
+- ProductImageInput DTO 만들기
+  • url: String!
+  • isMain: Boolean = false -> 이렇게 해놓고 필수아님 설정애준다음에 입력시에 true로 선언된것만 입력해주면 됨
+
+- CreateProductInput & UpdateProductInput에 이미지 컬럼 추가
+  • productImageUrls: [ProductImageInput!] 추가 -> CreateProductInput에 추가하면 UpdateProductInput에도 자동으로 추가됨
+
+
+2. 모듈 설정
+- ProductImagesModule을 export
+  • TypeOrmModule.forFeature([ProductImage]) 등록
+  • ProductImagesService 제공 및 export도 등록
+
+- ProductsModule:
+  • ProductImagesModule 전체를 import
+
+
+3. ProductImagesService 구현
+a. saveImages({
+    inputs,
+    product,
+  }: IProductImagesServiceSaveImages)
+   - 이미지 정보를 받고, 상품테이블과의 조인을 위해 받는 id는 Product전체를 받아서 저장하면 TypeOrm이 알아서 조인해줌
+
+b. updateImages({
+    inputs,
+    product,
+  }: IProductImagesServiceUpdateImages): 
+  - 기존 이미지 데이터를 모두 삭제하고, 새로 덮어쓰기
+
+이때 각 함수에 대한 타입스크립트 interface를 별도로 만들어줘야된다!
+
+
+
+4. 상품 등록 시 이미지 등록
+ProductsService.create()
+- 기존 생성로직은 유지하고 -> 리턴값으로 result2가 나옴
+- productImageUrls가 있으면:
+  • productImagesService.saveImages(productImageUrls, result2) 호출
+
+5. 상품 수정 시 이미지 수정 
+ProductsService.update()
+- 기존 업데이트 로직 유지 -> 리턴값으로 savedProduct가 나옴
+- productImageUrls가 있으면:
+  • productImagesService.updateImages(savedProduct, productImageUrls) 호출
+
+

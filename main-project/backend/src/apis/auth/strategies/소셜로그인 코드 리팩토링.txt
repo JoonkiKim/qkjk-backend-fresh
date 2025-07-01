@@ -1,0 +1,10 @@
+@Get('/login/:social') 를 사용해서 google naver kakao 여부를 매개변수로 받아주고
+
+AuthGuard에도 동적으로 값을 넣어주기 위해 dynamicauthguard를 만들어준다
+이게 왜 가능한지 파악해보면
+AuthGuard를 실행하면 그 안에 있는 canActivate라는게 실행되면서 가드가 작동하는거다
+이런 원리를 따라서 DynamicAuthGuard에도 canActivate를 넣어서 동일하게 작동하도록 만든다음에 @UseGuards안쪽에 넣어주면 된다
+
+
+이런 리팩토링은 유지보수가 어떤게 쉬운지에 따라 하는거임
+나만 저걸 알고 있고 다른 팀원은 모른다면 저걸 할 수가 없음

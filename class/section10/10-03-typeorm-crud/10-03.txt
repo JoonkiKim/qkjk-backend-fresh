@@ -1,0 +1,19 @@
+module에서 테이블을 정해주고 service부분에서 repository라는 이름으로 typeorm기능을 받아준다 
+=> Repository가 DB에 접속 조회 등록해주는 역할이다
+
+
+@Args('productId')와, @Args('createProductInput') 부분의 안쪽 '' 부분은 브라우저 쪽에서 백엔드 쪽으로 요청을 보낼때 사용하는 이름이다. 
+
+mutation {
+  createProduct(createProductInput: { name: "Laptop", price: 1000 })
+}
+
+query {
+  fetchProduct(productId: "123")
+}
+
+
+이런 식으로.
+
+따라서 내가 안 쪽의 이름을 맘대로 바꾸고 싶으면 바꿔도 된다!!!
+근데 createProductInput: CreateProductInput 이런식으로 타입스크립트 선언을 해줬으니까 그냥 이거 따라서 써주는거다~!

@@ -1,0 +1,7 @@
+tsconfig.json에 아래의 설정파일을 넣어줘야 describe it 등의 함수를 인식할 수 있닼!
+
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.spec.ts", // 테스트 파일이 여기 포함되는지 확인
+    "test/**/*.ts" // (필요시)
+  ]

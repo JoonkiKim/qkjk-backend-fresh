@@ -1,0 +1,3 @@
+yarn test를 하면 spec.ts 아니면 test.ts라고 붙은 애들을 테스트를 돌린다
+
+app.controller.spec.ts는 app.controller.ts를 테스트해주는거다

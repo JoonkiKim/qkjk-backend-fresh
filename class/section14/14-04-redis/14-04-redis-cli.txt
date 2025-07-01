@@ -1,0 +1,54 @@
+레디스를 사용해보자
+
+docker-compose yaml파일 들어가서
+그 안에 작성해주면 된다
+
+나머지는 일단 주석처리하고 아래처럼 redis만 실행시켜준다
+
+  my-redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+docker-compose build -> up한 다음에, redis cli에 접속해서 명령어를 쳐보자
+
+우선 터미널을 아무데서나 새로 열어서 docker ps를 해준다
+redis:latest에 해당하는 container id를 찾아서 
+docker exec -it f5086bc097ae /bin/bash
+(f5086bc097ae가 컨테이너 아이디)
+를 해주면 레디스 안에 들어갈 수 있다
+
+접속하기 위해서
+redis-cli
+누르면 접속가능
+
+quit → exit 로 종료
+
+
+
+레디스는 키:밸류 형태로 사용한다
+로컬스토리지에서 키밸류로 데이터 저장하는것처럼 레디스에서도 그러는거임
+그리고 시간(ttl - time to leave)도 들어가있따. 몇초동안 데이터가 들어가있을수있는지 써있는거임. 10초로되어있다면 10초후에 그 데이터는 사라지는거임
+키:밸류:ttl 형태로 들어가있는거임
+
+
+키 저장내용을 보는 명령어
+keys *
+
+키 밸류 값을 저장하는 명령어
+set 키값 밸류값
+(set qqq apple)
+
+해당 키에 어떤 값이 들어가 있는지 확인하는법
+get 키값
+(get qqq)
+
+ttl이 얼마인지 확인하는 법
+ttl qqq
+이때 -1이라면 영구저장인거임
+
+ttl 설정하는 방법
+expire 키값 시간(초단위)
+expire qqq 20
+
+20초가 지나면 데이터가 없어지고 key * 로 조회해봐도 empty array가 나온다

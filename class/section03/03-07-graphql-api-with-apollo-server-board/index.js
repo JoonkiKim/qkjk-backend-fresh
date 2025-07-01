@@ -43,6 +43,7 @@ type Mutation {
     # 필수로 바꾸고 싶으면 느낌표 넣어주기
     # 맨 위에서 CreateBoardInput으로 writer: String, title: String, contents: String!를 묶어줄거임
 
+  # String이 리턴값에 대한 타입이고, CreateBoardInput!이 인풋값에 대한 타입 
     createBoard(createBoardInput: CreateBoardInput!): String
     
 }

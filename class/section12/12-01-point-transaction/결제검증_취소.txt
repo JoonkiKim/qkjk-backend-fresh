@@ -1,0 +1,1 @@
+결제 검증 및 취소는 main project의 payment폴더에 있는 리졸버 서비스에서 확인하기

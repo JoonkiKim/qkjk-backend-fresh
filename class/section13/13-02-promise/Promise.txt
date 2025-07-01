@@ -1,0 +1,26 @@
+"await는 Promise앞에만 붙일 수 있다 -> 아무데나 붙이는게 아니다"
+
+
+files.service.ts의 파일 업로드 과정을 보면 파일업로드 성공 여부와 상관없이 무조건 아래쪽 콘솔(console.log('파일전송이 완료되었습니다');)로 내려가고 있음 -> Promise를 사용해서 기다려줘야됨
+
+근데 file부분을 보면 Promise가 없어서 await를 사용할 수 없음
+await는 Promise에만 사용할 수 있기 때문!
+
+이걸 해결하기 위해 아래의 코드를 axios나 fetch에서 했던 것처럼 Promise형태로 바꿔줘야된다
+
+file
+      .createReadStream()
+      .pipe(storage.file(file.filename).createWriteStream())
+      .on('finish', () => {
+        console.log('성공');
+      })
+      .on('error', () => {
+        console.log('실패');
+      });
+
+--------
+그걸 하기 위해 Promise에 대해 먼저 공부해보자
+자세한 코드는 index.js에서 확인하기
+
+// 
+정리하면 파일 업로드 API 구현 시에는 따로 Promise를 만들어줘야된다!

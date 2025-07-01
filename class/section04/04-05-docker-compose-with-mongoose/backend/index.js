@@ -70,7 +70,7 @@ mongoose
 
 // docker-compose로 도커를 열면 두 도커 사이에 연결이 생김. 거기로 연결을 보내줘야됨. 이때 연결은 도커 이름으로 연결한다
 // 이 이름은 docker-compose.yaml파일에서 만들어준 이름으로 해야된다
-// 즉 여기에서는 e컴퓨터 속 localhost:27017이 아니라 my-database:27017로 요청을 보내야 m컴퓨터로 요청이 날라가는거임임
+// 즉 여기에서는 e컴퓨터 속 localhost:27017이 아니라 my-database:27017로 요청을 보내야 m컴퓨터로 요청이 날라가는거임
 // 이걸 "네임 리졸루션"(name-resolution)이라고 부른다
 
 app.listen(4000);

@@ -1,0 +1,34 @@
+프로시저에 대해 알아보자
+
+
+요즘은 Procedure를 DB에서 직접 적용하기보다는 가급적이면 Javascript단에서 적용하는 편입니다.
+
+하지만 우리는 Procedure의 기능을 이해하기위해  Procedure를 이용해서 많은 양의 DUMMY DATA를 직접 생성해 보겠습니다.
+
+-> 프로시저는 더미데이터를 생성할때 필요하다!
+
+
+
+show databases;
+
+use myproject;
+
+
+create procedure mydummydata2() 
+begin
+	declare i int default 1;
+	while i <= 500000 do
+		insert into board(writer, title, contents) values('철수', rand(), '내용');
+		set i = i + 1;
+	end while;
+	
+
+
+end;
+
+
+-- 프로시저 목록 확인하기
+show procedure status;
+
+-- 위의 함수만 엔터를 치면 함수가 선언된거지, 실행된게 아님, 실행하려면 아래의 call을 해줘야됨
+call mydummydata2();

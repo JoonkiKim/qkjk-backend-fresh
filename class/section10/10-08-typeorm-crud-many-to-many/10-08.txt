@@ -1,0 +1,17 @@
+N:M관계를 만들어보자
+
+상품 - 상품태그 테이블의 관계가 이거임
+
+기존 로직은 다 동일하고 상품태그 추가하는 부분을 createProductInput dto에서 추가해주면 됨
+
+여기도 resolver에서 딱히 하는거 없음.
+왜냐면 createProductInput에서 productTags를 받아주니까.
+
+service로 넘어가서 보면 update함수부분에 타입스크립트 에러가 엄청나게 떠있음
+// 숙제1. 왜 이런 에러가 발생하는지 생각
+=> DTO와 entity사이의 타입 불일치
+updateProductInput의 기반이 되는 createProductInput dto에서의  productTags의 타입은 string[] 임. 인풋으로 들어오는 값이 string[]인거임
+근데, 리턴값의 타입인 Product entity는 ProductTag[]타입을 쓰고 있음. 여기서 불일치가 발생한것!
+
+// 숙제2. 해결하기
+DTO에서 받은 string[]을 ProductTag[]로 변환하여 Entity와 일치하도록 맞춰주면 해결

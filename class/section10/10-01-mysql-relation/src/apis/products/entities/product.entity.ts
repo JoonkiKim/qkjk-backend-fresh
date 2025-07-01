@@ -47,10 +47,12 @@ export class Product {
   // 컬럼을 이렇게 반대쪽 테이블 이름으로 선언해주면 알아서 반대쪽 테이블의 PK컬럼이랑(이경우는 id컬럼) 연결이 되는것같다
 
   // 정리하면 "ProductSaleslocation테이블과 일대일 연결(OneToOne)을 할거고 JoinColumn을 여기서 선언해줬으니 여기가 중심이 되는 테이블이야. 이때 FK이름은 productSaleslocation 이고 타입은 ProductSaleslocation이야
+  // 1:1관계에서 반대쪽 테이블은 아무것도 안해줘도 된다
 
   // [N:1 연결방법]
   // 상품이 N, 카테고리가 1이다
   // ManyToOne에서는 JoinColumn할 필요가 없다
+  // ManyToOne에서도 반대쪽은 아무것도 안해도 된다
   @ManyToOne(() => ProductCategory) // 어떤 테이블에 연결할지 선언
   productCategory: ProductCategory;
 
@@ -63,7 +65,7 @@ export class Product {
   // ERD상에서는 상품과 상품태그 각각의 테이블에 FK가 없음 -> ORM에서는 각 테이블 둘다에 ManyToMany를 선언해줘야된다. 그러면 자동으로 연결용테이블이 생성된다
   // 그리고 둘중에 한군데에 JoinTable을 써줘야된다 -> 이걸 써줘야 중간테이블이 만들어진다
 
-  @JoinTable()
+  @JoinTable() // 중간 '테이블'을 만들어주는 부분
   @ManyToMany(() => ProductTag, (productsTags) => productsTags.products)
   // 다대다 에서는 서로가 서로를 어떤 컬럼명으로 부르고 있는지 써줘야됨. 여기서는 productTags로 반대편테이블을 선언해줬고 저쪽에서는 products로 선언했기 문에 (productsTags)=> productsTags.products 이렇게 써준다. 반대편 테이블은 반대로 쓰면된다
   productTags: ProductTag[]; // 태그는 여러개이니까 객체를 여러개 담을 수 있는 배열로 타입을 선언해준다

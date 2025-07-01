@@ -1,0 +1,123 @@
+[main-project를 기준으로 코드를 가져오기]
+
+redis와 nestjs를 연동해보자
+
+yarn add redis@4.6.7
+yarn add cache-manager@4
+yarn add cache-manager-redis-store@2.0.0
+yarn add --dev @types/cache-manager-redis-store
+
+위의 네개를 설치한뒤
+app.module에 추가해줘야된다
+
+CacheModule은 nestjs내장 명령어이고 그중에 redis를 쓸거라고 선언해줘야됨
+
+
+[board 테이블에서 cache를 적용해보자]
+등록 및 조회가 가능하니까 boards.resolver에서 코드를 보자
+
+
+그리고 메모리를 redis가 다 써버리면 다른 프로그램을 실행할수없으니까 maxmemory를 70%정도로 설정해놓는다!
+레디스에서 config get maxmemory 명령어를 치면 0이 나오는데 그게 전체 다쓴다는 뜻이다 -> 70으로 설정해줘야된다 
+
+만약 메모리를 모두 사용하면 어떻게 되는지는 정책에 따라 다른데
+config get maxmemory-policy를 했을때
+정책이 뜨는데
+noeviction => 기존 데이터 제거 안한다는 뜻, 그러면 프로그램이 종료된다
+보통은 allkeys-lru를 권장 -> 모든 key중 가장 조금 최근에 사용된거부터 지운다 (least recently used)
+
+로그인 정보처럼 지우면 안되는 정보가 있으면 Redis-cluster를 이용한다
+
+
+
+--------설정방법------------- 강의자료 말고 아래의 내용을 보기
+
+
+
+혹시나 이 글을 강의 처럼 install 다해주고나서 발견하셨다면
+
+간편하게 패키지.json에서 관련된거 다 지워주고 yarn.lock를 지워주시고 yarn install 입력해주세요
+
+yarn instlal @nestjs/cache-manager cache-manager-redis-store@2.0.0 
+
+yarn install -D @types/cache-manager @types/cache-manager-redis-store
+cache-manager-redis-store만큼은 2.0.0으로 설치해주셔야 합니다. 그래야 redisStore에대한 타입에러가 안납니다.
+
+출처: https://4sii.tistory.com/689
+
+이 아래부터는 그냥 제 코드 복붙입니다.
+
+아래 코드는 위의 출처 사이트를 가보시면 다 적혀있으니 제 코드를 복붙하셔도되고 출처 사이트가셔서 코드 복붙하셔도됩니다.
+
+app.module.ts
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { Module } from '@nestjs/common';
+import { CacheModule } from '@nestjs/cache-manager';
+import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './apis/auth/auth.module';
+import { BoardsModule } from './apis/boards/boards.module';
+import { FilesModule } from './apis/files/files.module';
+import { PaymentsModule } from './apis/payments/payments.module';
+import { PointsTransactionsModule } from './apis/pointsTransactions/pointsTransactions.module';
+import { ProductsModule } from './apis/products/products.module';
+import { ProductsCategoriesModule } from './apis/productsCategories/productsCategories.module';
+import { UsersModule } from './apis/users/users.module';
+import { CacheConfigService } from './cacheConfig.service';
+
+@Module({
+  imports: [
+    AuthModule,
+    BoardsModule, //
+    FilesModule,
+    PaymentsModule,
+    PointsTransactionsModule,
+    ProductsModule,
+    ProductsCategoriesModule,
+    UsersModule,
+    ConfigModule.forRoot(), // env를 사용할 수 있게 해줌
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: 'src/commons/graphql/schema.gql',
+      // context 부분이있어야~ resolver나 다른데에서
+      // @Context() context:IContext, context.res 등등으로 사용가능함
+      // req는 기본적으로 들어오지만, res는 이걸 작성해야 들어옴
+      context: ({ req, res }) => ({ req, res }),
+    }),
+
+    // https://docs.nestjs.com/techniques/database 참고
+    TypeOrmModule.forRoot({
+      type: process.env.DATABASE_TYPE as 'mysql',
+      host: process.env.DATABASE_HOST,
+      port: Number(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_DATABASE,
+      entities: [__dirname + '/apis/**/*.entity.*'],
+      synchronize: true,
+      logging: true,
+    }),
+
+    CacheModule.registerAsync({ isGlobal: true, useClass: CacheConfigService }),
+   
+  ],
+})
+export class AppModule {}
+cache-config.service.ts
+import { CacheModuleOptions, CacheOptionsFactory } from '@nestjs/cache-manager';
+import { Injectable } from '@nestjs/common';
+import redisStore from 'cache-manager-redis-store';
+
+@Injectable()
+export class CacheConfigService implements CacheOptionsFactory {
+  createCacheOptions(): CacheModuleOptions {
+    const config: CacheModuleOptions = {
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
+      ttl: 60,
+    };
+    return config;
+  }
+}

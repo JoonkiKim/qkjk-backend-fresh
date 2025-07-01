@@ -23,7 +23,7 @@ import { ConfigModule } from '@nestjs/config';
 
       database: process.env.DATABASE_DATABASE,
 
-      entities: [__dirname + '/apis/**/*.entity.*'], // 여기서 형식을 ts로 하면 dist로 들어갔을때는 ts를 못찾기 때문에 뒤쪽 확장자는 *로 해준다
+      entities: [__dirname + '/apis/**/*.entity.*'], // 여기서 형식을 ts로 하면 dist로 들어갔을때는 ts를 못찾기 때문에 뒤쪽 확장자는 *로 해준다 , 원래는 엔티티 이름으로 지정을 해줬었는데, 이제는 파일 확장자로 하면 전부 다 지정할 수 있게 된다
       synchronize: true,
       logging: true,
     }),

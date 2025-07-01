@@ -1,0 +1,4 @@
+restore함수를 통해 refreshToken을 검증하고 accessToken을 새로 만들어주자
+
+
+테스트는 auth service에서 액세스토큰만료시간을 짧게 해서 테스트해본다

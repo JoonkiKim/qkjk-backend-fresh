@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "target": "ES2016",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "types": ["node", "jest"], // ← 여기에 'jest'를 넣어 줍니다.
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.spec.ts", // 테스트 파일이 여기 포함되는지 확인
+    "test/**/*.ts" // (필요시)
+  ]
+}

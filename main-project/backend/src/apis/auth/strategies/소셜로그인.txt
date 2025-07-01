@@ -1,0 +1,38 @@
+
+잘 모르겠으면 소셜 로그인 (네이버 카카오 로그인과제 영상을 보세요)
+
+[소셜로그인 작동방법]
+
+브라우저에서 백엔드에 구글 로그인 API를 요청하면 백엔드는 브라우저에 구글 로그인 '페이지'를 넘겨준다(API를 요청하면 google passport strategy에서 로그인 페이지를 넘겨주는거임)
+
+그러면 브라우저가 구글이랑 복작복작해서 로그인을 하고 거기서 시크릿코드를 받아옴
+그러면 백엔드는 브라우저로 부터 다시 그 시크릿코드를 받아와서 구글에 시크릿코드를 보내면 구글이 액세스토큰 리프레시토큰 프로필정보를 보내줌 -> 그러면 백엔드는 그 프로필정보를 통해서 브라우저(즉, 유저)의 회원가입 및 로그인 처리를 해주면 되는거임
+
+
+
+
+
+구글로그인같은 소셜로그인은 rest api로 진행해야한다
+
+그래서 controller를 하나 만들어주고
+google strategy도 하나 만들어줄거다
+module파일에
+controllers: [AuthController], 넣어주고
+provider쪽에 JwtGoogleStrategy 넣어주면 완!
+
+callbackURL넣을때 callbackURL: 'http://localhost:3000/login/naver' 처럼 https인지 http인지 확인하기!!
+
+yarn add passport-google-oauth20
+yarn add --dev @types/passport-google-oauth20
+
+네이버는 버전2로 해준다
+yarn add passport-naver-v2
+yarn add @types/passport-naver
+
+yarn add passport-kakao
+yarn add @types/passport-kakao
+
+
+
+소셜 로그인은 구글, 네이버, 카카오의 각 개발자 홈페이지에서 내 앱을 등록하는게 어려운거임
+코드 자체는 어렵지 않음

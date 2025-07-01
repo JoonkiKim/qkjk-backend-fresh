@@ -1,0 +1,45 @@
+데이터 베이스에 연결하는걸 connection이라고 하는데 이건 메모리를 사용해서 수행하는거기 때문에 메모리 용량관리를 잘 해줘야된다
+
+
+# DB 보여줘
+show databases;
+
+# DB 변경해줘
+use myproject;
+
+# 테이블 보여줘(myproject에 있는 테이블)
+show tables;
+
+# DB설정값 보여줘
+# (커넥션 최대값을 보고 싶으면 아래쪽에 max_connections를 보면 됨)
+# 예를 들어 max_connections : 151이면 151명까지만 접속할 수 있다는 뜻
+show variables;
+
+# 커넥션 최대값 바꿔줘
+# 초과하면 어떻게 되는지 확인해보기 위해 이렇게 바꿔보자
+set global max_connections = 15;
+
+# 지금 연결된 커넥션 갯수 보여줘(Thread_connected를 보면 됨)
+show status;
+
+# 현재 연결된 커넥션 목록 보여줘 
+# 저번에 배운 트랜잭션에서 디비를 꺼주는 함수인 await queryRunner.release();를 안하면 => commit이 끝나도 커넥션이 안 끊기고 sleep상태인채로 계속 연결이 계속 늘어난다 -> max_connections를 넘어간 상태로 계속 유지되면 다른 사람이 접속을 못하게 되고 그럼 디비 부하가 늘어나서 서버가 뻗는다 
+=> 반드시 서버 연결을 끊어줘야된다!
+show processlist;
+
+
+
+# 그럼 connection은 얼마가 적당하냐?
+# AWS기준으로 메모리/12582880 이래 -> 각자의 공식이 있따. 알아서 잘 관리하자
+
+
+
+# 코드를 잘못짜서 await queryRunner.release();를 안 해줬다면 강제로 커넥션을 끊어줘야된다. 
+# 특정한 하나의 커넥션 끊어줘(kill 커넥션ID) - 맨 앞쪽열에 id가 있으니까 그걸 써주면됨
+kill 481;
+
+
+
+
+# 그럼 기존에는 왜 따로 await queryRunner.connect();라는 코드로 연결을 안해줬냐? -> 다른 기능에서의 트랜잭션은 자동으로 연결되는거임! 근데 이번에 우리가 묶어준 트랜잭션은 따로 만든거니까 코드로 선언해줬던거임
+

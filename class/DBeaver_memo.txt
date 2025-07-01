@@ -1,0 +1,3 @@
+yarn start:dev로 접속하는 경우 디비버에 .env의 DATABASE NAME와 PASSWORD 입력
+
+docker로 접속하는 경우  디비버에 .env.docker의 DATABASE NAME와 PASSWORD 입력

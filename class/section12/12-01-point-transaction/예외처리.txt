@@ -1,0 +1,8 @@
+자세한 코드는 main_project로 가서 보기!
+
+httpexcetion과 Axios에러를 통합해보자
+
+iamport.service의 checkpaid함수를 보자
+
+예외처리를 통합하면
+try catch없이 에러 및 예외처리를 할 수 있다!!

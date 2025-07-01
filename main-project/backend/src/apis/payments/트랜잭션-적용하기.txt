@@ -1,0 +1,7 @@
+createForPayment와 cancel처럼 결제 단위 전체를 처리하는 상위 메서드에서만 SERIALIZABLE 레벨로 트랜잭션을 시작하고, 
+
+그 안에서 호출되는 createValue, checkDuplication, findByImpUidAndUser 같은 하위 함수들은 이미 열린 EntityManager(QueryRunner.manager)를 받아 그대로 사용하도록 하면된다
+
+
+
+// CustomExceptionFilter에서의 예외처리가 가능하도록 catch부분에서 throw error를 해준다!!!!!!!!

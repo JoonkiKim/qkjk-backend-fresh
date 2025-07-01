@@ -1,0 +1,141 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Allergy {
+  id: String!
+  name: String!
+  products: [Product!]!
+}
+
+type ProductCategory {
+  id: String!
+  name: String!
+}
+
+type ProductDetail {
+  id: String!
+  desc: String!
+  origin: String!
+  stock: Int!
+  expiration: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ProductImage {
+  id: String!
+  name: String!
+}
+
+type Store {
+  id: String!
+  name: String!
+  address: String!
+  description: String!
+}
+
+type Product {
+  id: String!
+  name: String!
+  description: String
+  price: Int!
+  isSoldout: Boolean!
+  productCategory: ProductCategory!
+  store: Store!
+  productImage: ProductImage!
+  productDetail: ProductDetail!
+  allergies: [Allergy!]!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  phone: String!
+  signOut: Boolean!
+}
+
+type Payment {
+  id: String!
+  price: Int!
+  rdate: DateTime!
+  payment_method: String!
+  user: User!
+}
+
+type Query {
+  fetchProducts: [Product!]!
+  fetchProduct(productId: String!): Product!
+  fetchProductsWithDeleted: [Product!]!
+  fetchLoginUser: User!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(productId: String!, updateProductInput: UpdateProductInput!): Product!
+  deleteProduct(productId: String!): Boolean!
+  restoreProduct(productId: String!): Boolean!
+  createProductCategory(name: String!): ProductCategory!
+  createStore(createStoreInput: CreateStoreInput!): Store!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(userId: String!, updateProductInput: UpdateUserInput!): User!
+  deleteUser(userId: String!): String!
+  login(email: String!, password: String!): String!
+}
+
+input CreateProductInput {
+  name: String!
+  description: String
+  price: Int!
+  productDetail: ProductDetailInput!
+  productCategoryId: String!
+  storeId: String!
+  allergies: [AllergyInput!]
+}
+
+input ProductDetailInput {
+  desc: String!
+  origin: String!
+  stock: Int!
+  expiration: DateTime!
+}
+
+input AllergyInput {
+  name: String!
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Int
+  productDetail: ProductDetailInput
+  productCategoryId: String
+  storeId: String
+  allergies: [AllergyInput!]
+}
+
+input CreateStoreInput {
+  name: String!
+  address: String!
+  description: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  age: Int!
+  phone: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+  age: Int
+  phone: String
+}

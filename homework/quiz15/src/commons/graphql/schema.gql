@@ -1,0 +1,77 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Allergy {
+  id: String!
+  name: String!
+  products: [Product!]!
+}
+
+type ProductCategory {
+  id: String!
+  name: String!
+}
+
+type Store {
+  id: String!
+  name: String!
+  address: String!
+  description: String!
+}
+
+type Product {
+  id: String!
+  name: String!
+  description: String
+  price: Int!
+  isSoldout: Boolean!
+  productCategory: ProductCategory!
+  store: Store!
+  allergies: [Allergy!]!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  userpwd: String!
+  phone: String!
+  gender: Int!
+  signOut: Boolean!
+}
+
+type TotalOrder {
+  id: String!
+  price: Int!
+  rdate: DateTime!
+  payment_method: String!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  fetchProducts: [Product!]!
+  fetchProduct(productId: String!): Product!
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(productId: String!, updateProductInput: UpdateProductInput!): Product!
+}
+
+input CreateProductInput {
+  name: String!
+  description: String
+  price: Int!
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Int
+}

@@ -1,5 +1,9 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "yaml.schemas": {
+    // compose-spec 스키마 매핑 제거
+    "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": []
+  }
 }

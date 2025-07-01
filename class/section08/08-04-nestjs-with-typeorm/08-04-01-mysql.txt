@@ -29,3 +29,7 @@ typeORM을 쓸거다
 자바스크립트에서는 sequalize를 쓰고, 타입스크립트에서는 typeORM을 쓴다
 
 
+MySQL 비밀번호 : 15080679
+$ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by '15080679';
+MySQL접속하는 방법 : mysql -u root -p
+나가는 방법: exit
