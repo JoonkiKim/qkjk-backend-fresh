@@ -4,14 +4,14 @@ steps:
   - name: docker/compose:1.29.0
     args:
       - -f
-      - class/section18/18-04-deploy-with-kubernetes-ci-cd/backend/cloudbuild.yaml
+      - class/section18/18-04-deploy-with-kubernetes-ci-cd/backend/docker-compose.prod.yaml
       - build
 
   # 2단계 => docker-compose -f docker-compose.prod.yaml push
   - name: docker/compose:1.29.0
     args:
       - -f
-      - class/section18/18-04-deploy-with-kubernetes-ci-cd/backend/cloudbuild.yaml
+      - class/section18/18-04-deploy-with-kubernetes-ci-cd/backend/docker-compose.prod.yaml
       - push
 
   # 3단계 => kubectl set image deployment/qkjk-backend-nestjs qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:0.7
