@@ -2,16 +2,15 @@ version: '3.7'
 
 services:
   my-backend:
-    image: asia.gcr.io/backend-462005/qkjk-backend:0.0
     build:
       context: .
       dockerfile: Dockerfile
     # volumes:
     #   - ./src:/myfolder/src
-    # ports:
-    #   - 3000:3000
-    # env_file:
-    #   - ./.env.prod
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.env.dev
 
   # my-database:
   #   image: mysql

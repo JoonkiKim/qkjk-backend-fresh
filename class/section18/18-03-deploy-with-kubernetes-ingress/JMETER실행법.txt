@@ -1,0 +1,13 @@
+[JMETER실행법]
+/projects/apache-jmeter-5.6.3/bin 로 이동
+/bin/bash ./jmeter &      실행 -> 그러면 GUI나옴
+
+
+
+[분석방법]
+
+View Results Tree에서 Latency는 프런트랑 백이랑 통신하는 속도가 얼마나 빠른가에 대한 성능
+
+Summary Report에서 throughput은 여러개의 브라우저에서 요청이 많이 들어왔을때 걔네를 얼마나 빨리 처리할 것인가에 대한 성능
+
+이 두개를 개선하는게 부하테스트의 목적이다

@@ -1,0 +1,16 @@
+Dockerfile에서 CMD yarn start:dev명령어를 바꿀거임
+# 1. 배포환경에서 소스코드가 수정되면 리프레시 된다는게 말이 안됨
+# 2. dev로 실행하면 이거저거 부가적인걸 많이 실행해야되어서 메모리 문제, 초기 실행속도 문제가 있음
+# 3. devDependencies설치되면서 yarn install이 오래걸림
+
+Dockerfile을 프로덕션 모드로 바꿔줄거다
+
+
+Dockerfile.prod를 만들고 그안에서
+yarn install과 yarn start:dev를 각각
+yarn install --production, yarn build + yarn start:prod로 바꿔준다
+
+package.json에서 dependencies 명령어를 실행할때 nest가 필요하기 때문에 "@nestjs/cli": "^8.0.0"는 dependencies로 옮겨준다
+
+
+그리고 요런거 수정하고 나서 docker-compose.prod.yaml파일에서 버전을 꼭 바꿔줘야 된다!

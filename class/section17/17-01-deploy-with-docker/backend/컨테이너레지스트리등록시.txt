@@ -1,0 +1,7 @@
+권한 없음이 뜨면 아래의 순서대로 인증토큰을 등록하기
+
+# 1) gcloud CLI 로그인 (이미 했다면 생략)
+gcloud auth login
+
+# 2) Docker 크레덴셜 헬퍼에 asia.gcr.io 호스트를 등록
+gcloud auth configure-docker asia.gcr.io
