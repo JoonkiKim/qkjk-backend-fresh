@@ -20,7 +20,7 @@ steps:
       - set
       - image
       - deployment/qkjk-backend-nestjs
-      - qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:0.9
+      - qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:1.0
       # 여기 버전이 docker-compose.prod.yaml이랑 같은지 확인해야됨
     env:
       - CLOUDSDK_COMPUTE_ZONE=asia-northeast3
