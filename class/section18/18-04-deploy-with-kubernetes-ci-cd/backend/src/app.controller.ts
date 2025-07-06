@@ -6,6 +6,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
   @Get('/')
   getHello() {
-    return '헬스체커 상태확인';
+    return 'CICD 상태확인';
   }
 }
