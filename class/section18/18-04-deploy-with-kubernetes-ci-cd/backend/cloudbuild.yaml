@@ -1,0 +1,27 @@
+steps:
+ # 1단계 => docker-compose -f docker-compose.prod.yaml build
+ #  cloudbuild.yaml가 있는 경로를 명시해줘야된다
+  - name: docker/compose:1.29.0
+    args:
+      - -f
+      - class/section18/18-04-deploy-with-kubernetes-ci-cd/backend/cloudbuild.yaml
+      - build
+
+  # 2단계 => docker-compose -f docker-compose.prod.yaml push
+  - name: docker/compose:1.29.0
+    args:
+      - -f
+      - class/section18/18-04-deploy-with-kubernetes-ci-cd/backend/cloudbuild.yaml
+      - push
+
+  # 3단계 => kubectl set image deployment/qkjk-backend-nestjs qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:0.7
+  - name: gcr.io/cloud-builders/kubectl
+    args:
+      - set
+      - image
+      - deployment/qkjk-backend-nestjs
+      - qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:0.7
+      # 여기 버전이 docker-compose.prod.yaml이랑 같은지 확인해야됨
+    env:
+      - CLOUDSDK_COMPUTE_ZONE=asia-northeast3
+      - CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1
