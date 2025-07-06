@@ -20,8 +20,12 @@ steps:
       - set
       - image
       - deployment/qkjk-backend-nestjs
-      - qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:0.7
+      - qkjk-backend-sha256-1=asia.gcr.io/backend-462005/qkjk-backend:0.8
       # 여기 버전이 docker-compose.prod.yaml이랑 같은지 확인해야됨
     env:
       - CLOUDSDK_COMPUTE_ZONE=asia-northeast3
       - CLOUDSDK_CONTAINER_CLUSTER=autopilot-cluster-1
+serviceAccount: projects/backend-462005/serviceAccounts/ci-builder@backend-462005.iam.gserviceaccount.com
+
+options:
+  logging: CLOUD_LOGGING_ONLY
